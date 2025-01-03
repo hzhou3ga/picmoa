@@ -1,0 +1,6 @@
+#!/bin/tcsh -f 
+
+set dat=$1
+if ( $1 == "" ) exit
+
+cat $dat | awk 'BEGIN{kk=-1;c=0;a=0}{if($1=="Within") kk=1;if($1=="(between_SS") {kk=-1;a=$5};if(kk>0&&substr($1,1,1)=="[") for(l=2;l<=NF;l++) c=c+$l}END{print a,c}'

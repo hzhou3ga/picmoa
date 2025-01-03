@@ -1,0 +1,26 @@
+#!/bin/tcsh -f 
+
+set lst=cancer.lst
+set lst=all.lst
+if ( $1 != "" ) set lst=$1
+
+set np=`wc -l $lst | awk '{print $1}'`
+rm -if _fea.txt
+
+set i=1
+lpi:
+set me=`head -$i $lst | tail -1 | awk '{print $2}'`
+set id=`head -$i $lst | tail -1 | awk '{print $1}'`
+set typ=`grep -w "$me" ./all_3608_disease_classification.txt  | head -1 | awk '{print $2}'`
+if ( $typ == "" ) goto ok1
+set dat=genelst/${me}.txt
+set nx=`wc -l $dat | awk '{print $1}'`
+if ( $nx == 0 ) goto ok1
+echo $i $me $id $nx 
+cat $dat ./ALL_enrichmoa_2000.lst  | awk 'BEGIN{xx=""}{i=i+1;if(i<='$nx'){t[i]=$1}else{c=0;for(l=1;l<='$nx';l++)if(t[l]==$1) c=$2;xx=xx " " c}}END{print xx,"#","'$me'","'$typ'"}'  >> _fea.txt
+
+
+ok1:
+@ i = $i + 1
+if ( $i <= $np ) goto lpi
+mv -f _fea.txt all_dis_kmean_fea.txt 

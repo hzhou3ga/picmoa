@@ -1,0 +1,40 @@
+#!/bin/tcsh -f  
+
+
+set npp=50
+cat all_dis_c2-9_kmean_fea.txt | awk 'BEGIN{FS="#"}{print $1}' >! kmeanfea.txt
+
+rm -if _rr.out 
+set i=2
+lpi:
+
+
+echo $i  
+if ( ! -e output/pred_dis_c2-9_${i}.outx  ) then
+cat kmean.r | awk '{i=i+1;if(i!=4) print $0;if(i==4) print "km.res=kmeans(x,'$i',iter.max = 1000, nstart = 25,"}' >! x_kmean.r 
+Rscript x_kmean.r >! _pred.out 
+mv -f _pred.out output/pred_dis_c2-9_${i}.out
+endif 
+set lx=`grep -w ave output/pred_dis_c2-9_${i}.out  | wc -l | awk '{print $1}'`
+
+if ( $lx == 0 ) then
+./scan_getcls.job output/pred_dis_c2-9_${i}.out >! _mycls.lst
+echo 2000 $i >! _tmp.inp
+echo  _mycls.lst >> _tmp.inp
+echo kmeanfea.txt >> _tmp.inp
+./silscore_avedis<_tmp.inp >& err.out 
+cat  err.out >> output/pred_dis_c2-9_${i}.out
+set sl=`tail -1 err.out | awk '{print $2}'`
+else
+set sl=`tail -1 output/pred_dis_c2-9_${i}.out  | awk '{print $2}'`
+endif
+
+set dis=`grep ave output/pred_dis_c2-9_${i}.out  | awk '{print $0}'`
+set rr=`./scan_sumsquare.job output/pred_dis_c2-9_${i}.out | awk '{print "'$i'",$0,"'$sl'"}'` 
+echo $rr $dis >> _rr.out
+
+
+@ i = $i + 1
+if ( $i <= $npp ) goto lpi
+mv -f _rr.out dis_c2-9_k.dat
+

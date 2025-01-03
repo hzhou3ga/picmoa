@@ -1,10 +1,10 @@
-download all files
-unzip -x alloutput.zip   (directory output: all clustering outputs )
-unzip -x allpathway.zip  (directory pathway:  pathway predictions )
-unzip -x allmolfunc.zip  (directory molfunction: molecular function predictions )
-unzip -x allgenelst.zip  (directories: genelst  genelstwithinbase )
-unzip -x allrandtestseed.zip (directory: randseed  )
-unzip -x allrandtestshuffle.zip (directory: randshuffle )
+download all files 
+unzip -x alloutput.zip   (directory output: all clustering outputs ) 
+unzip -x allpathway.zip  (directory pathway:  pathway predictions ) 
+unzip -x allmolfunc.zip  (directory molfunction: molecular function predictions ) 
+unzip -x allgenelst.zip  (directories: genelst  genelstwithinbase ) 
+unzip -x allrandtestseed.zip (directory: randseed  ) 
+unzip -x allrandtestshuffle.zip (directory: randshuffle ) 
 
 For pathway computation, see pathway/readme.txt
 For GO function computation, see molfunction/readme.txt

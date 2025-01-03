@@ -1,0 +1,14 @@
+#!/bin/tcsh -f 
+
+set dat=$1
+set fea=$2
+set cls=$3
+if ( $3 == "" ) exit
+
+cat $dat | awk 'BEGIN{kk=-1;c=0;a=0}{if($2=="vector:") kk=1;if($1=="Within") {kk=-1};if(kk>0&&substr($1,1,1)=="[") for(l=2;l<=NF;l++){j=j+1;print j,$l}}END{}' >! _tmp0.lst
+if ( $fea != "" ) then
+paste _tmp0.lst  $fea | awk '{if($2=="'$cls'"){c=$3;for(l=4;l<=NF;l++) c=c " " $l;print c}}'
+else
+cat _tmp0.lst
+endif 
+rm -if _tmp0.lst
