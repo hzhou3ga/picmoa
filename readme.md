@@ -19,7 +19,9 @@ disease genes within the 2000 base vetor "ALL_enrichmoa_2000.lst" are in genelst
 Other data:
 For Sankey input data:               see data/sankey_test.txt
 For all disease cluster assignments" see data/all_dis_kmean_sortname_allclass.tsv
-For top 500 non-redundant disease pairs and their random pairs see data/all_top500pair.txt & data/all_top500pair_rand.txt
+For top 500 non-redundant disease pairs within cluster and their random pairs see data/all_top500pair.txt & data/all_top500pair_rand.txt
+ChatGPT outputs for pairs within cluster: allrelateanswer.zip
+ChatGPT outputs for random paired outside cluster: allrandanswer.zip
 
 
 Steps to reproduce all 3 levels of  clustering: 
