@@ -1,0 +1,41 @@
+#!/bin/tcsh -f  
+
+set lst=allclass.lst
+
+set nc=`wc -l $lst | awk '{print $1}'`
+
+set dat=all_top500pair.txt
+#rm -if all_top500pair_rand.txt
+
+set i=1
+lpi:
+set me=`head -$i $lst | tail -1 | awk '{print $1}'`
+
+grep -w $me $dat >! _tmp0.lst 
+grep -wv  $me $dat | awk 'BEGIN{FS="\t"}{print $4,"#"$0}' | sort -k1 | awk '{if($1!=c){c=$1;print $0}}' | awk 'BEGIN{FS="#"}{print $2}' >! _tmpx.lst 
+set nx=`wc -l  _tmp0.lst  | awk '{print $1}'`
+set ny=`wc -l  _tmpx.lst  | awk '{print $1}'`
+
+set p=`echo $nx $ny | awk '{print $1/$2+0.01}'`
+#echo $me $p
+set m=123
+lpm:
+cat _tmpx.lst | awk 'BEGIN{srand('$m');j=0}{x=rand();if(x<'$p'&&j<'$nx'){print $0;j=j+1}}' >! _tmpy.lst 
+set nz=`wc -l _tmpy.lst | awk '{print $1}'`
+if ( $nx != $nz ) then
+@ m = $m + 2
+goto lpm
+endif 
+set nw=`paste  _tmp0.lst _tmpy.lst  | awk 'BEGIN{FS="\t"}{print $2"-"$10}'| sort -k1 | awk '{if($1!=c){c=$1;print $1}}' |wc -l`
+if ( $nw != $nx ) goto lpm
+#echo $me $p $nx $nz $nw
+
+#paste  _tmp0.lst _tmpy.lst  | awk 'BEGIN{FS="\t"}{print $1"\t"$2"\t"$3"\t"$10"\t"$11"\t"$6}' >> all_top500pair_rand.txt
+paste  _tmp0.lst _tmpy.lst  | awk 'BEGIN{FS="\t"}{print $1"\t"$2"\t"$3"\t"$10"\t"$11"\t"$6}' 
+
+
+ok1:
+
+@ i = $i + 1
+if ( $i <= $nc ) goto lpi
+rm -if _*
