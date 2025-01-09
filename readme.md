@@ -15,8 +15,11 @@ For disease list see "all.lst"
 For 2000 gene base vector see "ALL_enrichmoa_2000.lst"
 For disease-gene list as predicted by LeMeDISCO, see genelst/*.txt 
 disease genes within the 2000 base vetor "ALL_enrichmoa_2000.lst" are in genelstwithinbase
+
+Other data:
 For Sankey input data:               see data/sankey_test.txt
 For all disease cluster assignments" see data/all_dis_kmean_sortname_allclass.tsv
+For top 500 non-redundant disease pairs and their random pairs see data/all_top500pair.txt & data/all_top500pair_rand.txt
 
 Steps to reproduce all 3 levels of  clustering: 
 Running:
