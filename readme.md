@@ -22,6 +22,7 @@ For all disease cluster assignments" see data/all_dis_kmean_sortname_allclass.ts
 For top 500 non-redundant disease pairs within cluster and their random pairs see data/all_top500pair.txt & data/all_top500pair_rand.txt
 ChatGPT outputs for pairs within cluster: data/allrelateanswer.zip
 ChatGPT outputs for random paired outside cluster: data/allrandanswer.zip
+Valsci analysis:  data/DiseaseCluster_Valsci_Analysis.zip 
 
 
 Steps to reproduce all 3 levels of  clustering: 
